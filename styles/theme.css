@@ -1,0 +1,196 @@
+/* ============================================================
+   ALAKAZAM DS — SEMANTIC THEME TOKENS
+   Light & Dark mode via data-theme attribute or prefers-color-scheme.
+   Token names from Figma "Alakazam DS (Primitives)" Color Mapping page.
+   ============================================================ */
+
+/* ==========================
+   LIGHT MODE (default)
+   ========================== */
+:root,
+[data-theme="light"] {
+
+  /* --- Surface Colors --- */
+  --surface-primary:              var(--color-gray-0);
+  --surface-secondary:            var(--color-gray-50);
+  --surface-wash:                 var(--color-gray-50);
+  --surface-highlight:            var(--color-gray-100);
+  --surface-elevated:             var(--color-gray-0);
+  --surface-tinted:               rgba(255, 255, 255, 0.06);
+  --surface-primary-button:       var(--color-gray-950);
+  --surface-secondary-button:     var(--color-gray-50);
+  --surface-follow-primary-button: var(--color-accent-blue);
+  --surface-outline:              rgba(0, 0, 0, 0.05);
+  --surface-on-media:             rgba(0, 0, 0, 0.30);
+  --surface-shadow:               rgba(0, 0, 0, 0.06);
+  --surface-scrim:                rgba(17, 17, 18, 0.30);
+
+  /* --- Text Colors --- */
+  --text-primary:                 var(--color-gray-1000);
+  --text-secondary:               var(--color-gray-500);
+  --text-tertiary:                var(--color-gray-200);
+  --text-on-color:                var(--color-gray-0);
+  --text-secondary-on-color:      rgba(255, 255, 255, 0.70);
+  --text-primary-surface:         var(--color-gray-1000);
+  --text-link:                    var(--color-accent-blue);
+  --text-inverted:                var(--color-gray-0);
+  --text-inverted-secondary:      rgba(255, 255, 255, 0.70);
+
+  /* --- Icon Colors --- */
+  --icon-primary:                 var(--color-gray-950);
+  --icon-secondary:               var(--color-gray-500);
+  --icon-tertiary:                var(--color-gray-200);
+  --icon-inverted:                var(--color-gray-0);
+  --icon-accent:                  var(--color-accent-blue);
+
+  /* --- Communication Colors --- */
+  --color-success:                #2E7D32;
+  --color-error:                  #D32F2F;
+  --color-error-on-color:         #FFCDD2;
+  --color-liked:                  #E91E63;
+
+  /* --- Code Syntax Colors --- */
+  --code-default:                 var(--color-gray-950);
+  --code-keyword:                 #7C4DFF;
+  --code-string:                  #2E7D32;
+  --code-comment:                 var(--color-gray-500);
+  --code-number:                  #0064D4;
+  --code-method:                  #B71C1C;
+  --code-operator:                var(--color-gray-500);
+
+  /* --- Overlay --- */
+  --overlay-background:           rgba(0, 0, 0, 0.50);
+  --overlay-outline:              rgba(0, 0, 0, 0.10);
+
+  /* --- Borders --- */
+  --border-default:               rgba(0, 0, 0, 0.05);
+  --border-strong:                rgba(0, 0, 0, 0.10);
+  --border-divider:               var(--color-gray-200);
+
+  /* --- Component-specific surfaces --- */
+  --bottom-sheet-bg:              var(--color-gray-0);
+}
+
+/* ==========================
+   DARK MODE
+   ========================== */
+[data-theme="dark"] {
+
+  /* --- Surface Colors --- */
+  --surface-primary:              var(--color-gray-950);
+  --surface-secondary:            var(--color-gray-900);
+  --surface-wash:                 var(--color-gray-900);
+  --surface-highlight:            var(--color-gray-800);
+  --surface-elevated:             var(--color-gray-800);
+  --surface-tinted:               rgba(255, 255, 255, 0.06);
+  --surface-primary-button:       var(--color-gray-0);
+  --surface-secondary-button:     var(--color-gray-800);
+  --surface-follow-primary-button: var(--color-accent-blue);
+  --surface-outline:              rgba(255, 255, 255, 0.12);
+  --surface-on-media:             rgba(0, 0, 0, 0.50);
+  --surface-shadow:               rgba(0, 0, 0, 0.20);
+  --surface-scrim:                rgba(17, 17, 18, 0.60);
+
+  /* --- Text Colors --- */
+  --text-primary:                 var(--color-gray-0);
+  --text-secondary:               var(--color-gray-500);
+  --text-tertiary:                var(--color-gray-800);
+  --text-on-color:                var(--color-gray-1000);
+  --text-secondary-on-color:      rgba(0, 0, 0, 0.70);
+  --text-primary-surface:         var(--color-gray-0);
+  --text-link:                    var(--color-accent-blue);
+  --text-inverted:                var(--color-gray-1000);
+  --text-inverted-secondary:      rgba(0, 0, 0, 0.70);
+
+  /* --- Icon Colors --- */
+  --icon-primary:                 var(--color-gray-0);
+  --icon-secondary:               var(--color-gray-500);
+  --icon-tertiary:                var(--color-gray-800);
+  --icon-inverted:                var(--color-gray-950);
+  --icon-accent:                  var(--color-accent-blue);
+
+  /* --- Communication Colors --- */
+  --color-success:                #66BB6A;
+  --color-error:                  #EF5350;
+  --color-error-on-color:         #B71C1C;
+  --color-liked:                  #F06292;
+
+  /* --- Code Syntax Colors --- */
+  --code-default:                 var(--color-gray-0);
+  --code-keyword:                 #B388FF;
+  --code-string:                  #81C784;
+  --code-comment:                 var(--color-gray-500);
+  --code-number:                  #64B5F6;
+  --code-method:                  #EF9A9A;
+  --code-operator:                var(--color-gray-500);
+
+  /* --- Overlay --- */
+  --overlay-background:           rgba(0, 0, 0, 0.70);
+  --overlay-outline:              rgba(255, 255, 255, 0.12);
+
+  /* --- Borders --- */
+  --border-default:               rgba(255, 255, 255, 0.12);
+  --border-strong:                rgba(255, 255, 255, 0.20);
+  --border-divider:               var(--color-gray-800);
+
+  /* --- Component-specific surfaces --- */
+  --bottom-sheet-bg:              var(--color-gray-800);
+}
+
+/* Respect system preference when no explicit data-theme is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+
+    --surface-primary:              var(--color-gray-950);
+    --surface-secondary:            var(--color-gray-900);
+    --surface-wash:                 var(--color-gray-900);
+    --surface-highlight:            var(--color-gray-800);
+    --surface-elevated:             var(--color-gray-800);
+    --surface-tinted:               rgba(255, 255, 255, 0.06);
+    --surface-primary-button:       var(--color-gray-0);
+    --surface-secondary-button:     var(--color-gray-800);
+    --surface-follow-primary-button: var(--color-accent-blue);
+    --surface-outline:              rgba(255, 255, 255, 0.12);
+    --surface-on-media:             rgba(0, 0, 0, 0.50);
+    --surface-shadow:               rgba(0, 0, 0, 0.20);
+    --surface-scrim:                rgba(17, 17, 18, 0.60);
+
+    --text-primary:                 var(--color-gray-0);
+    --text-secondary:               var(--color-gray-500);
+    --text-tertiary:                var(--color-gray-800);
+    --text-on-color:                var(--color-gray-1000);
+    --text-secondary-on-color:      rgba(0, 0, 0, 0.70);
+    --text-primary-surface:         var(--color-gray-0);
+    --text-link:                    var(--color-accent-blue);
+    --text-inverted:                var(--color-gray-1000);
+    --text-inverted-secondary:      rgba(0, 0, 0, 0.70);
+
+    --icon-primary:                 var(--color-gray-0);
+    --icon-secondary:               var(--color-gray-500);
+    --icon-tertiary:                var(--color-gray-800);
+    --icon-inverted:                var(--color-gray-950);
+    --icon-accent:                  var(--color-accent-blue);
+
+    --color-success:                #66BB6A;
+    --color-error:                  #EF5350;
+    --color-error-on-color:         #B71C1C;
+    --color-liked:                  #F06292;
+
+    --code-default:                 var(--color-gray-0);
+    --code-keyword:                 #B388FF;
+    --code-string:                  #81C784;
+    --code-comment:                 var(--color-gray-500);
+    --code-number:                  #64B5F6;
+    --code-method:                  #EF9A9A;
+    --code-operator:                var(--color-gray-500);
+
+    --overlay-background:           rgba(0, 0, 0, 0.70);
+    --overlay-outline:              rgba(255, 255, 255, 0.12);
+
+    --border-default:               rgba(255, 255, 255, 0.12);
+    --border-strong:                rgba(255, 255, 255, 0.20);
+    --border-divider:               var(--color-gray-800);
+
+    --bottom-sheet-bg:              var(--color-gray-800);
+  }
+}

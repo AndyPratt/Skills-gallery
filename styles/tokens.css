@@ -1,0 +1,70 @@
+:root {
+  /* ============================================================
+     ALAKAZAM DS — PRIMITIVE COLOR TOKENS
+     Source: Figma "Alakazam DS (Primitives)"
+     ============================================================ */
+
+  /* --- AI Gray Palette --- */
+  --color-gray-0:    #FFFFFF;
+  --color-gray-50:   #F3F4F5;
+  --color-gray-100:  #E9EAEB;
+  --color-gray-200:  #E1E3E8;
+  --color-gray-300:  #D5D6D8;
+  --color-gray-500:  #686A6E;
+  --color-gray-800:  #28292B;
+  --color-gray-850:  #2D2E36;
+  --color-gray-900:  #181819;
+  --color-gray-950:  #111112;
+  --color-gray-1000: #0D0E0F;
+  --color-black:     #000000;
+
+  /* --- Accent / Brand --- */
+  --color-accent-blue: #43A9FF;
+  --color-info:        #D5ECFE;
+
+  /* --- Gradients --- */
+  --gradient-blue-indigo-650: linear-gradient(270deg, rgba(69, 83, 228, 1) 0%, rgba(0, 100, 212, 1) 100%);
+  --gradient-red-rose-650:    linear-gradient(270deg, rgba(191, 29, 76, 1) 0%, rgba(192, 31, 55, 1) 100%);
+
+  /* ============================================================
+     SHAPE / BORDER RADIUS
+     ============================================================ */
+  --radius-none: 0px;
+  --radius-150:  6px;
+  --radius-200:  8px;
+  --radius-300:  12px;
+  --radius-600:  24px;
+  --radius-750:  30px;
+  --radius-800:  32px;
+  --radius-900:  36px;
+  --radius-1000: 40px;
+  --radius-1500: 60px;
+  --radius-full: 1000px;
+
+  /* ============================================================
+     SPACING SCALE (4px base)
+     ============================================================ */
+  --space-0:   0px;
+  --space-1:   2px;
+  --space-2:   4px;
+  --space-3:   6px;
+  --space-4:   8px;
+  --space-5:   10px;
+  --space-6:   12px;
+  --space-8:   16px;
+  --space-10:  20px;
+  --space-12:  24px;
+  --space-16:  32px;
+  --space-20:  40px;
+  --space-24:  48px;
+  --space-32:  64px;
+  --space-40:  80px;
+  --space-60:  120px;
+  --space-80:  160px;
+
+  /* ============================================================
+     BORDER / STROKE
+     ============================================================ */
+  --border-width-default: 1px;
+  --border-width-medium:  2px;
+}

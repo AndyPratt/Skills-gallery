@@ -1,0 +1,149 @@
+/* ============================================================
+   ALAKAZAM DS — TYPOGRAPHY
+   Font families: Optimistic AI VF, Optimistic VF, JetBrains Mono
+   Source: Figma "Alakazam DS (Primitives)" Typography section
+   ============================================================ */
+
+:root {
+  /* --- Font Families --- */
+  --font-primary:  "Optimistic AI VF", system-ui, -apple-system, sans-serif;
+  --font-display:  "Optimistic VF", system-ui, -apple-system, sans-serif;
+  --font-mono:     "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace;
+
+  /* --- Font Weights --- */
+  --weight-regular:    400;
+  --weight-medium:     500;
+  --weight-semibold:   600;
+  --weight-bold:       700;
+
+  /* --- Type Scale (font-size / line-height) ---
+     Named after their semantic role in the design system. */
+
+  /* Display — hero / cover */
+  --text-display-size:    128px;
+  --text-display-height:  1.09375em;
+  --text-display-weight:  var(--weight-semibold);
+
+  /* Heading 1 — page sections */
+  --text-h1-size:    64px;
+  --text-h1-height:  1.1875em;
+  --text-h1-weight:  var(--weight-bold);
+
+  /* Heading 2 — large subtitles */
+  --text-h2-size:    80px;
+  --text-h2-height:  1.2885em;
+  --text-h2-weight:  var(--weight-bold);
+
+  /* Heading 3 — medium subtitles */
+  --text-h3-size:    48px;
+  --text-h3-height:  1.5em;
+  --text-h3-weight:  var(--weight-bold);
+
+  /* Heading 4 — alert titles, component headers */
+  --text-h4-size:    34px;
+  --text-h4-height:  1.1765em;
+  --text-h4-weight:  var(--weight-medium);
+
+  /* Body — default paragraph text */
+  --text-body-size:    16px;
+  --text-body-height:  1.2545em;
+  --text-body-weight:  var(--weight-regular);
+  --text-body-spacing: -0.015em;
+
+  /* Body Medium — section headers, labels with emphasis */
+  --text-body-medium-size:    16px;
+  --text-body-medium-height:  1.2545em;
+  --text-body-medium-weight:  var(--weight-medium);
+
+  /* Label — pills, tags, metadata */
+  --text-label-size:    14px;
+  --text-label-height:  1.2545em;
+  --text-label-weight:  var(--weight-regular);
+
+  /* Caption — palette labels, small annotations */
+  --text-caption-size:    15px;
+  --text-caption-height:  1.6em;
+  --text-caption-weight:  var(--weight-medium);
+  --text-caption-spacing: 0.0067em;
+
+  /* Code — token names, code blocks */
+  --text-code-size:    11px;
+  --text-code-height:  1.32em;
+  --text-code-weight:  var(--weight-regular);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.text-display {
+  font-family: var(--font-primary);
+  font-size:   var(--text-display-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-height);
+}
+
+.text-h1 {
+  font-family: var(--font-primary);
+  font-size:   var(--text-h1-size);
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-height);
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-height);
+}
+
+.text-h3 {
+  font-family: var(--font-display);
+  font-size:   var(--text-h3-size);
+  font-weight: var(--text-h3-weight);
+  line-height: var(--text-h3-height);
+}
+
+.text-h4 {
+  font-family: var(--font-primary);
+  font-size:   var(--text-h4-size);
+  font-weight: var(--text-h4-weight);
+  line-height: var(--text-h4-height);
+}
+
+.text-body {
+  font-family:    var(--font-primary);
+  font-size:      var(--text-body-size);
+  font-weight:    var(--text-body-weight);
+  line-height:    var(--text-body-height);
+  letter-spacing: var(--text-body-spacing);
+}
+
+.text-body-medium {
+  font-family: var(--font-primary);
+  font-size:   var(--text-body-medium-size);
+  font-weight: var(--text-body-medium-weight);
+  line-height: var(--text-body-medium-height);
+}
+
+.text-label {
+  font-family: var(--font-primary);
+  font-size:   var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--text-label-height);
+}
+
+.text-caption {
+  font-family:    var(--font-display);
+  font-size:      var(--text-caption-size);
+  font-weight:    var(--text-caption-weight);
+  line-height:    var(--text-caption-height);
+  letter-spacing: var(--text-caption-spacing);
+}
+
+.text-code {
+  font-family: var(--font-mono);
+  font-size:   var(--text-code-size);
+  font-weight: var(--text-code-weight);
+  line-height: var(--text-code-height);
+}

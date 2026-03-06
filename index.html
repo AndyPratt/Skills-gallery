@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=393, initial-scale=1.0">
+  <title>Skills Gallery</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/app.css">
+</head>
+<body>
+  <div class="device-frame">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="3" width="3" height="7" rx="1" fill="currentColor" opacity=".4"/><rect x="5" y="2" width="3" height="8" rx="1" fill="currentColor" opacity=".6"/><rect x="10" y="1" width="3" height="9" rx="1" fill="currentColor" opacity=".8"/><rect x="15" y="0" width="3" height="10" rx="1" fill="currentColor"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 3.6C9.8 3.6 11.4 4.3 12.6 5.4L14 4C12.4 2.5 10.3 1.6 8 1.6C5.7 1.6 3.6 2.5 2 4L3.4 5.4C4.6 4.3 6.2 3.6 8 3.6Z" fill="currentColor" opacity=".5"/><path d="M8 7.2C9 7.2 9.9 7.6 10.6 8.2L12 6.8C10.9 5.8 9.5 5.2 8 5.2C6.5 5.2 5.1 5.8 4 6.8L5.4 8.2C6.1 7.6 7 7.2 8 7.2Z" fill="currentColor" opacity=".75"/><circle cx="8" cy="10.5" r="1.5" fill="currentColor"/></svg>
+        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="currentColor" stroke-width="1"/><rect x="23" y="4" width="2" height="4" rx="1" fill="currentColor" opacity=".4"/><rect x="2" y="3" width="16" height="6" rx="1" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <!-- App Header -->
+    <header class="app-header">
+      <h1 class="app-title">Skills</h1>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.09 11.18A7 7 0 018.82 2.91a7 7 0 108.27 8.27z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </header>
+
+    <!-- Tab Content Area -->
+    <main class="tab-content" id="tabContent">
+
+      <!-- FOR YOU TAB -->
+      <section class="tab-panel active" id="panelForYou">
+        <div class="section-intro">
+          <p class="section-subtitle">Curated for you</p>
+          <p class="section-desc">Based on your design systems and full-stack workflow</p>
+        </div>
+        <div class="skills-list" id="forYouList"></div>
+      </section>
+
+      <!-- POPULAR TAB -->
+      <section class="tab-panel" id="panelPopular">
+        <div class="filter-bar" id="filterBar"></div>
+        <div class="skills-list" id="popularList"></div>
+      </section>
+
+      <!-- FAVORITES TAB -->
+      <section class="tab-panel" id="panelFavorites">
+        <div class="skills-list" id="favoritesList"></div>
+        <div class="empty-state" id="emptyFavorites">
+          <div class="empty-icon">☆</div>
+          <p class="empty-title">No favorites yet</p>
+          <p class="empty-desc">Tap the heart on any skill to save it here</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Tab Bar -->
+    <nav class="tab-bar">
+      <button class="tab-btn active" data-tab="panelForYou">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>For You</span>
+      </button>
+      <button class="tab-btn" data-tab="panelPopular">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>Popular</span>
+      </button>
+      <button class="tab-btn" data-tab="panelFavorites">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span>Favorites</span>
+      </button>
+    </nav>
+
+    <!-- Home Indicator -->
+    <div class="home-indicator"><div class="indicator-bar"></div></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

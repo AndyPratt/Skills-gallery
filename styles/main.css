@@ -1,0 +1,69 @@
+/* ============================================================
+   ALAKAZAM DS — Master Stylesheet
+   Meta AI 2.0 Design System
+   ============================================================
+   Import order matters: tokens first, then theme, then utilities.
+   ============================================================ */
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./elevation.css";
+@import "./theme.css";
+
+/* ============================================================
+   BASE RESET & DEFAULTS
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-height);
+  letter-spacing: var(--text-body-spacing);
+  color: var(--text-primary);
+  background-color: var(--surface-primary);
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT DEFAULTS
+   ============================================================ */
+
+h1 { font-family: var(--font-primary); font-size: var(--text-h1-size); font-weight: var(--text-h1-weight); line-height: var(--text-h1-height); }
+h2 { font-family: var(--font-display);  font-size: var(--text-h2-size); font-weight: var(--text-h2-weight); line-height: var(--text-h2-height); }
+h3 { font-family: var(--font-display);  font-size: var(--text-h3-size); font-weight: var(--text-h3-weight); line-height: var(--text-h3-height); }
+h4 { font-family: var(--font-primary); font-size: var(--text-h4-size); font-weight: var(--text-h4-weight); line-height: var(--text-h4-height); }
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: var(--text-code-size);
+  line-height: var(--text-code-height);
+}
+
+hr {
+  border: none;
+  border-top: var(--border-width-default) solid var(--border-divider);
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}

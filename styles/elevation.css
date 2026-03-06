@@ -1,0 +1,124 @@
+/* ============================================================
+   ALAKAZAM DS — ELEVATION & MATERIALS
+   Blur, box-shadow, and combined blur+elevation tokens.
+   Source: Figma "Alakazam DS (Primitives)" Elevation page
+   ============================================================ */
+
+:root {
+  /* ==========================
+     MOBILE — Blur Only
+     ========================== */
+  --mobile-blur-100: blur(30px);
+  --mobile-blur-200: blur(30px);
+  --mobile-blur-300: blur(30px);
+  --mobile-blur-400: blur(40px);
+
+  /* ==========================
+     MOBILE — Elevation Only
+     ========================== */
+  --mobile-elevation-100:
+    0px 4px 20px 0px rgba(0, 0, 0, 0.04),
+    0px 1px 3px  0px rgba(0, 0, 0, 0.02);
+
+  --mobile-elevation-200:
+    0px 6px 30px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px  0px rgba(0, 0, 0, 0.02);
+
+  --mobile-elevation-300:
+    0px 8px 40px 0px rgba(0, 0, 0, 0.08),
+    0px 2px 6px  0px rgba(0, 0, 0, 0.02);
+
+  --mobile-elevation-400:
+    0px 10px 50px 0px rgba(0, 0, 0, 0.10),
+    0px 3px  9px  0px rgba(0, 0, 0, 0.02);
+
+  /* ==========================
+     WEB — Blur Only
+     ========================== */
+  --web-blur-100: blur(36px);
+  --web-blur-200: blur(48px);
+  --web-blur-300: blur(60px);
+
+  /* ==========================
+     WEB — Elevation Only
+     ========================== */
+  --web-elevation-100:
+    0px 6px  30px 0px rgba(0, 0, 0, 0.07),
+    0px 0px  6px  0px rgba(0, 0, 0, 0.03),
+    0px 0px  2px  0px rgba(0, 0, 0, 0.02),
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.06);
+
+  --web-elevation-200:
+    0px 10px 50px 0px rgba(0, 0, 0, 0.07),
+    0px 0px  10px 0px rgba(0, 0, 0, 0.03),
+    0px 0px  2px  0px rgba(0, 0, 0, 0.02),
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.06);
+
+  --web-elevation-300:
+    0px 12px 60px 0px rgba(0, 0, 0, 0.12),
+    0px 0px  12px 0px rgba(0, 0, 0, 0.04),
+    inset 0px 1px 0px 0px rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   UTILITY CLASSES — Mobile
+   ============================================================ */
+
+.elevation-mobile-blur-100     { backdrop-filter: var(--mobile-blur-100); -webkit-backdrop-filter: var(--mobile-blur-100); }
+.elevation-mobile-blur-200     { backdrop-filter: var(--mobile-blur-200); -webkit-backdrop-filter: var(--mobile-blur-200); }
+.elevation-mobile-blur-300     { backdrop-filter: var(--mobile-blur-300); -webkit-backdrop-filter: var(--mobile-blur-300); }
+.elevation-mobile-blur-400     { backdrop-filter: var(--mobile-blur-400); -webkit-backdrop-filter: var(--mobile-blur-400); }
+
+.elevation-mobile-100          { box-shadow: var(--mobile-elevation-100); }
+.elevation-mobile-200          { box-shadow: var(--mobile-elevation-200); }
+.elevation-mobile-300          { box-shadow: var(--mobile-elevation-300); }
+.elevation-mobile-400          { box-shadow: var(--mobile-elevation-400); }
+
+.elevation-mobile-blur-100-combo {
+  box-shadow: var(--mobile-elevation-100);
+  backdrop-filter: var(--mobile-blur-100);
+  -webkit-backdrop-filter: var(--mobile-blur-100);
+}
+.elevation-mobile-blur-200-combo {
+  box-shadow: var(--mobile-elevation-200);
+  backdrop-filter: var(--mobile-blur-200);
+  -webkit-backdrop-filter: var(--mobile-blur-200);
+}
+.elevation-mobile-blur-300-combo {
+  box-shadow: var(--mobile-elevation-300);
+  backdrop-filter: var(--mobile-blur-300);
+  -webkit-backdrop-filter: var(--mobile-blur-300);
+}
+.elevation-mobile-blur-400-combo {
+  box-shadow: var(--mobile-elevation-400);
+  backdrop-filter: var(--mobile-blur-400);
+  -webkit-backdrop-filter: var(--mobile-blur-400);
+}
+
+/* ============================================================
+   UTILITY CLASSES — Web
+   ============================================================ */
+
+.elevation-web-blur-100        { backdrop-filter: var(--web-blur-100); -webkit-backdrop-filter: var(--web-blur-100); }
+.elevation-web-blur-200        { backdrop-filter: var(--web-blur-200); -webkit-backdrop-filter: var(--web-blur-200); }
+.elevation-web-blur-300        { backdrop-filter: var(--web-blur-300); -webkit-backdrop-filter: var(--web-blur-300); }
+
+.elevation-web-100             { box-shadow: var(--web-elevation-100); }
+.elevation-web-200             { box-shadow: var(--web-elevation-200); }
+.elevation-web-300             { box-shadow: var(--web-elevation-300); }
+
+.elevation-web-blur-100-combo {
+  box-shadow: var(--web-elevation-100);
+  backdrop-filter: var(--web-blur-100);
+  -webkit-backdrop-filter: var(--web-blur-100);
+}
+.elevation-web-blur-200-combo {
+  box-shadow: var(--web-elevation-200);
+  backdrop-filter: var(--web-blur-200);
+  -webkit-backdrop-filter: var(--web-blur-200);
+}
+.elevation-web-blur-300-combo {
+  box-shadow: var(--web-elevation-300);
+  backdrop-filter: var(--web-blur-300);
+  -webkit-backdrop-filter: var(--web-blur-300);
+}
