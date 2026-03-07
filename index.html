@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=393, initial-scale=1.0">
-  <title>Skills Gallery</title>
+  <title>Hatch Skills</title>
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/app.css">
 </head>
@@ -21,11 +21,7 @@
 
     <!-- App Header -->
     <header class="app-header">
-      <h1 class="app-title">Skills</h1>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.09 11.18A7 7 0 018.82 2.91a7 7 0 108.27 8.27z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+      <h1 class="app-title">Hatch Skills</h1>
     </header>
 
     <!-- Tab Content Area -->
@@ -56,6 +52,41 @@
         </div>
       </section>
 
+      <!-- SETTINGS TAB -->
+      <section class="tab-panel" id="panelSettings">
+
+        <div class="settings-section">
+          <h2 class="settings-section-title">Appearance</h2>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <span class="settings-row-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.09 11.18A7 7 0 018.82 2.91a7 7 0 108.27 8.27z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="settings-row-label">Dark Mode</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h2 class="settings-section-title">About Me</h2>
+          <p class="settings-section-desc">Tell us about yourself — your role, interests, tools, and goals. This helps recommend the most relevant skills for you.</p>
+          <div class="about-me-input-wrap">
+            <textarea id="aboutMeInput" rows="5" placeholder="e.g. I'm a frontend developer who works with React and TypeScript. I'm interested in design systems and accessibility..."></textarea>
+            <button class="about-me-mic" id="aboutMeMic" aria-label="Dictate with voice">
+              <svg class="mic-icon-idle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M19 10v1a7 7 0 01-14 0v-1"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              <svg class="mic-icon-active" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            </button>
+          </div>
+          <div class="about-me-status" id="aboutMeStatus"></div>
+          <button class="about-me-save" id="aboutMeSave">Save profile</button>
+        </div>
+
+      </section>
+
     </main>
 
     <!-- Bottom Tab Bar -->
@@ -71,6 +102,10 @@
       <button class="tab-btn" data-tab="panelFavorites">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         <span>Favorites</span>
+      </button>
+      <button class="tab-btn" data-tab="panelSettings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Settings</span>
       </button>
     </nav>
 

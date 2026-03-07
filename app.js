@@ -749,20 +749,148 @@
   });
 
   // ============================================================
-  //  THEME TOGGLE
+  //  THEME TOGGLE (Settings panel)
   // ============================================================
 
+  const darkModeToggle = document.getElementById("darkModeToggle");
   const savedTheme = localStorage.getItem("skillTheme");
+
   if (savedTheme) {
     document.documentElement.setAttribute("data-theme", savedTheme);
   }
 
-  document.getElementById("themeToggle").addEventListener("click", () => {
-    const html = document.documentElement;
-    const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    html.setAttribute("data-theme", next);
+  darkModeToggle.checked = document.documentElement.getAttribute("data-theme") === "dark";
+
+  darkModeToggle.addEventListener("change", () => {
+    const next = darkModeToggle.checked ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("skillTheme", next);
   });
+
+  // ============================================================
+  //  ABOUT ME — persistence + speech-to-text
+  // ============================================================
+
+  const aboutMeInput = document.getElementById("aboutMeInput");
+  const aboutMeSave = document.getElementById("aboutMeSave");
+  const aboutMeMic = document.getElementById("aboutMeMic");
+  const aboutMeStatus = document.getElementById("aboutMeStatus");
+
+  const savedAboutMe = localStorage.getItem("skillAboutMe");
+  if (savedAboutMe) {
+    aboutMeInput.value = savedAboutMe;
+  }
+
+  aboutMeSave.addEventListener("click", () => {
+    const value = aboutMeInput.value.trim();
+    localStorage.setItem("skillAboutMe", value);
+    showAboutMeStatus("Profile saved", "success");
+  });
+
+  function showAboutMeStatus(msg, type) {
+    aboutMeStatus.textContent = msg;
+    aboutMeStatus.className = "about-me-status " + (type || "");
+    if (type === "success") {
+      setTimeout(() => {
+        aboutMeStatus.textContent = "";
+        aboutMeStatus.className = "about-me-status";
+      }, 2500);
+    }
+  }
+
+  let speechRecognition = null;
+  let isRecording = false;
+
+  function initSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      return null;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+    return recognition;
+  }
+
+  aboutMeMic.addEventListener("click", () => {
+    if (isRecording) {
+      stopRecording();
+      return;
+    }
+
+    if (!speechRecognition) {
+      speechRecognition = initSpeechRecognition();
+    }
+
+    if (!speechRecognition) {
+      showAboutMeStatus("Speech recognition not supported in this browser", "error");
+      return;
+    }
+
+    startRecording();
+  });
+
+  function startRecording() {
+    const textBefore = aboutMeInput.value;
+    let interimTranscript = "";
+
+    isRecording = true;
+    aboutMeMic.classList.add("recording");
+    showAboutMeStatus("Listening…", "");
+
+    speechRecognition.onresult = (event) => {
+      interimTranscript = "";
+      let finalTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      if (finalTranscript) {
+        const separator = textBefore.length > 0 && !textBefore.endsWith(" ") ? " " : "";
+        aboutMeInput.value = textBefore + separator + finalTranscript;
+      }
+
+      if (interimTranscript) {
+        showAboutMeStatus("…" + interimTranscript, "");
+      }
+    };
+
+    speechRecognition.onerror = (event) => {
+      if (event.error === "no-speech") {
+        showAboutMeStatus("No speech detected — try again", "error");
+      } else if (event.error !== "aborted") {
+        showAboutMeStatus("Microphone error: " + event.error, "error");
+      }
+      stopRecording();
+    };
+
+    speechRecognition.onend = () => {
+      if (isRecording) {
+        stopRecording();
+      }
+    };
+
+    speechRecognition.start();
+  }
+
+  function stopRecording() {
+    isRecording = false;
+    aboutMeMic.classList.remove("recording");
+    if (speechRecognition) {
+      speechRecognition.stop();
+    }
+    if (aboutMeStatus.textContent.startsWith("Listening") || aboutMeStatus.textContent.startsWith("…")) {
+      aboutMeStatus.textContent = "";
+      aboutMeStatus.className = "about-me-status";
+    }
+  }
 
   // ============================================================
   //  INIT
