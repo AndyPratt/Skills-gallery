@@ -620,56 +620,90 @@
   //  PROMPT SHEET — shows the system prompt with copy action
   // ============================================================
 
+  function toSkillSlug(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  }
+
+  function formatAsSkillMd(skill) {
+    const slug = toSkillSlug(skill.name);
+    return `---\nname: ${slug}\ndescription: ${skill.desc}\n---\n\n# ${skill.name}\n\n${skill.prompt}`;
+  }
+
   function openPromptSheet(skill) {
     const overlay = getOverlay();
+    let activeFormat = "skill"; // "skill" or "raw"
 
-    overlay.innerHTML = `
-      <div class="overlay-header">
-        <button class="prompt-back" aria-label="Back">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-        </button>
-        <span class="prompt-header-title">${skill.name}</span>
-        <div style="width:32px"></div>
-      </div>
-      <div class="overlay-body prompt-body">
-        <h3 class="detail-section-title">System Prompt</h3>
-        <p class="prompt-instructions">Copy this prompt and paste it as a system instruction in Claude, ChatGPT, Cursor, or any AI assistant.</p>
-        <pre class="prompt-block"><code>${escapeHtml(skill.prompt)}</code></pre>
-        <button class="prompt-copy-btn" aria-label="Copy prompt to clipboard">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          <span>Copy to clipboard</span>
-        </button>
-        <div class="prompt-destinations">
-          <span class="prompt-dest-label">Then paste into:</span>
-          <div class="prompt-dest-chips">
-            <span class="prompt-chip">Claude Projects</span>
-            <span class="prompt-chip">ChatGPT Instructions</span>
-            <span class="prompt-chip">Cursor Rules</span>
-            <span class="prompt-chip">System Prompt</span>
+    function getFormattedPrompt() {
+      return activeFormat === "skill" ? formatAsSkillMd(skill) : skill.prompt;
+    }
+
+    function render() {
+      const formatted = getFormattedPrompt();
+
+      overlay.innerHTML = `
+        <div class="overlay-header">
+          <button class="prompt-back" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          </button>
+          <span class="prompt-header-title">${skill.name}</span>
+          <div style="width:32px"></div>
+        </div>
+        <div class="overlay-body prompt-body">
+          <div class="prompt-format-toggle">
+            <button class="format-btn ${activeFormat === "skill" ? "active" : ""}" data-fmt="skill">SKILL.md</button>
+            <button class="format-btn ${activeFormat === "raw" ? "active" : ""}" data-fmt="raw">Raw Prompt</button>
+          </div>
+          <p class="prompt-instructions">${
+            activeFormat === "skill"
+              ? "Ready to use as a SKILL.md file in Cursor or Claude Code."
+              : "Copy and paste as a system instruction in Claude, ChatGPT, or any AI assistant."
+          }</p>
+          <pre class="prompt-block"><code>${escapeHtml(formatted)}</code></pre>
+          <button class="prompt-copy-btn" aria-label="Copy to clipboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span>Copy to clipboard</span>
+          </button>
+          <div class="prompt-destinations">
+            <span class="prompt-dest-label">${activeFormat === "skill" ? "Save as SKILL.md in:" : "Then paste into:"}</span>
+            <div class="prompt-dest-chips">
+              ${activeFormat === "skill"
+                ? `<span class="prompt-chip">~/.cursor/skills/</span><span class="prompt-chip">.cursor/skills/</span><span class="prompt-chip">Claude Code</span>`
+                : `<span class="prompt-chip">Claude Projects</span><span class="prompt-chip">ChatGPT Instructions</span><span class="prompt-chip">System Prompt</span>`
+              }
+            </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
 
-    overlay.querySelector(".prompt-back").addEventListener("click", () => {
-      openDetail(skill);
-    });
-
-    const copyBtn = overlay.querySelector(".prompt-copy-btn");
-    copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(skill.prompt).then(() => {
-        copyBtn.classList.add("copied");
-        copyBtn.querySelector("span").textContent = "Copied!";
-        copyBtn.querySelector("svg").innerHTML =
-          '<path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
-        setTimeout(() => {
-          copyBtn.classList.remove("copied");
-          copyBtn.querySelector("span").textContent = "Copy to clipboard";
-          copyBtn.querySelector("svg").innerHTML =
-            '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';
-        }, 2000);
+      overlay.querySelector(".prompt-back").addEventListener("click", () => {
+        openDetail(skill);
       });
-    });
+
+      overlay.querySelectorAll(".format-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          activeFormat = btn.dataset.fmt;
+          render();
+        });
+      });
+
+      const copyBtn = overlay.querySelector(".prompt-copy-btn");
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(formatted).then(() => {
+          copyBtn.classList.add("copied");
+          copyBtn.querySelector("span").textContent = "Copied!";
+          copyBtn.querySelector("svg").innerHTML =
+            '<path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+          setTimeout(() => {
+            copyBtn.classList.remove("copied");
+            copyBtn.querySelector("span").textContent = "Copy to clipboard";
+            copyBtn.querySelector("svg").innerHTML =
+              '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';
+          }, 2000);
+        });
+      });
+    }
+
+    render();
   }
 
   function escapeHtml(str) {

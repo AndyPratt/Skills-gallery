@@ -656,6 +656,36 @@
   background: var(--surface-highlight);
 }
 
+.prompt-format-toggle {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+
+.format-btn {
+  flex: 1;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-code-size);
+  font-weight: var(--weight-semibold);
+  line-height: var(--text-code-height);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.format-btn.active {
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
 .prompt-instructions {
   font-family: var(--font-primary);
   font-size: var(--text-label-size);
