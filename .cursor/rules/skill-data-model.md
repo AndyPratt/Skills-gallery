@@ -1,5 +1,5 @@
 ---
-description: Enforces the skill data model in app.js. Apply when adding, editing, or reviewing skills in the skills array.
+description: Enforces the skill data model in app.js per the Agent Skills spec (agentskills.io/specification). Apply when adding, editing, or reviewing skills in the skills array.
 globs:
   - app.js
 ---
@@ -12,36 +12,52 @@ Every entry in the `skills` array **must** have these fields:
 |-------|------|----------|---------|
 | `id` | string | yes | Unique identifier (`fy-N` for For You, `pop-N` for Popular) |
 | `emoji` | string | yes | Fallback emoji (kept for data completeness) |
-| `name` | string | yes | Human-readable skill name |
-| `desc` | string | yes | One-sentence description — also used as the SKILL.md `description` frontmatter |
+| `name` | string | yes | Human-readable skill name — slugified for SKILL.md `name` field |
+| `desc` | string | yes | One-sentence description — used as SKILL.md `description` frontmatter |
 | `longDesc` | string | yes | Expanded description for the detail view |
-| `category` | string | yes | Must be one of: `Coding`, `Writing`, `Research`, `Design`, `Productivity`, `Data` |
+| `category` | string | yes | One of: `Coding`, `Writing`, `Research`, `Design`, `Productivity`, `Data` |
 | `source` | string | yes | Origin label: `Official`, `Community`, or `Cursor` |
 | `section` | string | yes | `"forYou"` or `"popular"` |
 | `features` | string[] | yes | 3–5 bullet points describing capabilities |
 | `prompt` | string | yes | The full system prompt — this is what gets copied |
 
-## SKILL.md Compatibility
+## Agent Skills Spec Compliance
 
-The `formatAsSkillMd(skill)` function generates valid SKILL.md output from any skill:
+The app generates SKILL.md output via `formatAsSkillMd(skill)`. All skills must comply with the [Agent Skills specification](https://agentskills.io/specification):
+
+### `name` field (derived from `skill.name` via `toSkillSlug`)
+
+- Max 64 characters
+- Lowercase letters, numbers, and hyphens only (`a-z`, `0-9`, `-`)
+- Must NOT start or end with a hyphen
+- Must NOT contain consecutive hyphens (`--`)
+- Keep `skill.name` concise so the slug stays under 64 chars
+
+### `description` field (from `skill.desc`)
+
+- Max 1024 characters
+- Written in third person ("Analyzes code…" not "I analyze code…")
+- Must describe both WHAT the skill does and WHEN to use it
+- Include specific keywords that help agents identify relevant tasks
+
+### `prompt` field (becomes the markdown body)
+
+- Self-contained — must work as a standalone system instruction
+- Never include YAML frontmatter inside `prompt` — the app wraps it automatically
+- Keep under 500 lines for optimal agent performance (per spec's progressive disclosure guidance)
+
+## Generated SKILL.md Format
 
 ```
 ---
-name: <slugified skill.name>
-description: <skill.desc>
+name: <toSkillSlug(skill.name)>
+description: <skill.desc, truncated to 1024 chars>
 ---
 
 # <skill.name>
 
 <skill.prompt>
 ```
-
-### Rules
-
-- `name` must slugify to a valid SKILL.md name: max 64 chars, lowercase letters/numbers/hyphens only.
-- `desc` must be ≤ 1024 chars and written in third person ("Analyzes code…" not "I analyze code…").
-- `prompt` must be self-contained — it should work as a standalone system instruction without any other context.
-- Never include YAML frontmatter inside `prompt` — the app wraps it automatically.
 
 ## Icon Requirement
 

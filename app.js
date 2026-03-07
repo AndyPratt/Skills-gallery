@@ -621,12 +621,18 @@
   // ============================================================
 
   function toSkillSlug(name) {
-    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/-{2,}/g, "-")
+      .replace(/(^-|-$)/g, "")
+      .slice(0, 64);
   }
 
   function formatAsSkillMd(skill) {
     const slug = toSkillSlug(skill.name);
-    return `---\nname: ${slug}\ndescription: ${skill.desc}\n---\n\n# ${skill.name}\n\n${skill.prompt}`;
+    const desc = skill.desc.length > 1024 ? skill.desc.slice(0, 1021) + "..." : skill.desc;
+    return `---\nname: ${slug}\ndescription: ${desc}\n---\n\n# ${skill.name}\n\n${skill.prompt}`;
   }
 
   function openPromptSheet(skill) {
