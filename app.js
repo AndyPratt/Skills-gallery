@@ -240,16 +240,216 @@
   //  RENDER HELPERS
   // ============================================================
 
-  function iconColorForCategory(cat) {
-    const map = {
-      Coding: "icon-blue",
-      Writing: "icon-purple",
-      Research: "icon-green",
-      Design: "icon-orange",
-      Productivity: "icon-teal",
-      Data: "icon-pink",
-    };
-    return map[cat] || "icon-blue";
+  // ============================================================
+  //  SVG ICON SYSTEM — organic circular illustrations
+  // ============================================================
+
+  const ICON_MAP = {
+    // --- For You ---
+    "fy-1": { // Design-Token Extractor — overlapping color circles
+      grad: ["#c49a4a", "#d4a84a"],
+      path: `<circle cx="18" cy="20" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7"/>
+             <circle cx="24" cy="17" r="5" fill="none" stroke="#fff" stroke-width="1.2" opacity=".85"/>
+             <circle cx="30" cy="20" r="5" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <path d="M16 30 Q24 27 32 30" fill="none" stroke="#fff" stroke-width="1" opacity=".5"/>`
+    },
+    "fy-2": { // React Component Architect — atom/orbital
+      grad: ["#5e8260", "#8fb08f"],
+      path: `<ellipse cx="24" cy="24" rx="10" ry="4" fill="none" stroke="#fff" stroke-width="1.2" transform="rotate(-30 24 24)"/>
+             <ellipse cx="24" cy="24" rx="10" ry="4" fill="none" stroke="#fff" stroke-width="1.2" transform="rotate(30 24 24)"/>
+             <ellipse cx="24" cy="24" rx="10" ry="4" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <circle cx="24" cy="24" r="2" fill="#fff"/>`
+    },
+    "fy-3": { // Codebase Navigator — connected nodes
+      grad: ["#5d7f94", "#8aacbf"],
+      path: `<circle cx="24" cy="16" r="2.5" fill="#fff"/>
+             <circle cx="16" cy="28" r="2.5" fill="#fff"/>
+             <circle cx="32" cy="28" r="2.5" fill="#fff"/>
+             <line x1="24" y1="18.5" x2="16" y2="25.5" stroke="#fff" stroke-width="1.2"/>
+             <line x1="24" y1="18.5" x2="32" y2="25.5" stroke="#fff" stroke-width="1.2"/>
+             <line x1="18.5" y1="28" x2="29.5" y2="28" stroke="#fff" stroke-width="1.2" opacity=".6"/>`
+    },
+    "fy-4": { // Test Writer Pro — flask
+      grad: ["#4a7a78", "#7aaba8"],
+      path: `<path d="M21 14 V20 L15 32 H33 L27 20 V14" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+             <line x1="20" y1="14" x2="28" y2="14" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M17 26 H31" stroke="#fff" stroke-width="1" opacity=".5"/>
+             <circle cx="22" cy="29" r="1" fill="#fff" opacity=".7"/>
+             <circle cx="26" cy="28" r="1.3" fill="#fff" opacity=".5"/>`
+    },
+    "fy-5": { // Figma-to-Code Bridge — bridge arch
+      grad: ["#b0a090", "#c4b5a0"],
+      path: `<path d="M12 30 Q18 16 24 16 Q30 16 36 30" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+             <line x1="16" y1="30" x2="16" y2="23" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <line x1="24" y1="30" x2="24" y2="16" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <line x1="32" y1="30" x2="32" y2="23" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <line x1="12" y1="30" x2="36" y2="30" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`
+    },
+    "fy-6": { // Security Code Reviewer — shield
+      grad: ["#5d6f8a", "#8a9bb0"],
+      path: `<path d="M24 13 L33 17 V25 Q33 32 24 36 Q15 32 15 25 V17 Z" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/>
+             <path d="M20 25 L23 28 L29 21" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>`
+    },
+
+    // --- Popular ---
+    "pop-1": { // Technical Writer — quill/feather
+      grad: ["#9a8a7a", "#b0a898"],
+      path: `<path d="M30 12 Q22 20 18 32" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+             <path d="M30 12 Q34 18 30 24 Q26 20 22 18" fill="none" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <path d="M30 12 Q28 20 24 26" fill="none" stroke="#fff" stroke-width="1" opacity=".4"/>
+             <line x1="15" y1="34" x2="25" y2="34" stroke="#fff" stroke-width="1" opacity=".5" stroke-linecap="round"/>`
+    },
+    "pop-2": { // Data Analyst — wave chart
+      grad: ["#5d7f94", "#7a9bb0"],
+      path: `<path d="M13 28 Q17 20 21 24 Q25 28 29 18 Q33 12 35 16" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+             <line x1="13" y1="34" x2="35" y2="34" stroke="#fff" stroke-width="1" opacity=".4"/>
+             <line x1="13" y1="34" x2="13" y2="14" stroke="#fff" stroke-width="1" opacity=".4"/>`
+    },
+    "pop-3": { // Deep Research — magnifying glass with sparkle
+      grad: ["#c49a4a", "#d4a84a"],
+      path: `<circle cx="22" cy="22" r="7" fill="none" stroke="#fff" stroke-width="1.3"/>
+             <line x1="27" y1="27" x2="34" y2="34" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+             <line x1="22" y1="18" x2="22" y2="20" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+             <line x1="18" y1="22" x2="20" y2="22" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".7"/>`
+    },
+    "pop-4": { // Debug Detective — bug/beetle
+      grad: ["#b06040", "#c48060"],
+      path: `<ellipse cx="24" cy="26" rx="6" ry="7" fill="none" stroke="#fff" stroke-width="1.3"/>
+             <line x1="24" y1="19" x2="24" y2="33" stroke="#fff" stroke-width="1" opacity=".5"/>
+             <path d="M15 22 L18 24" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M33 22 L30 24" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M15 30 L18 28" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M33 30 L30 28" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <line x1="21" y1="15" x2="20" y2="12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <line x1="27" y1="15" x2="28" y2="12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`
+    },
+    "pop-5": { // Email Composer — envelope
+      grad: ["#7a9a7a", "#a0b8a0"],
+      path: `<rect x="14" y="17" width="20" height="14" rx="2" fill="none" stroke="#fff" stroke-width="1.3"/>
+             <path d="M14 17 L24 26 L34 17" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+             <path d="M14 31 L21 25" stroke="#fff" stroke-width="1" opacity=".5" stroke-linecap="round"/>
+             <path d="M34 31 L27 25" stroke="#fff" stroke-width="1" opacity=".5" stroke-linecap="round"/>`
+    },
+    "pop-6": { // System Design — building blocks
+      grad: ["#5d7f94", "#7a9bb0"],
+      path: `<rect x="14" y="26" width="8" height="8" rx="1" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <rect x="26" y="26" width="8" height="8" rx="1" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <rect x="20" y="14" width="8" height="8" rx="1" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <line x1="22" y1="22" x2="18" y2="26" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <line x1="26" y1="22" x2="30" y2="26" stroke="#fff" stroke-width="1" opacity=".6"/>`
+    },
+    "pop-7": { // Meeting Notes — clipboard list
+      grad: ["#c49a4a", "#d4a84a"],
+      path: `<rect x="16" y="14" width="16" height="22" rx="2" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <rect x="21" y="12" width="6" height="4" rx="1" fill="#fff" opacity=".8"/>
+             <line x1="20" y1="22" x2="28" y2="22" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+             <line x1="20" y1="26" x2="26" y2="26" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+             <line x1="20" y1="30" x2="28" y2="30" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>`
+    },
+    "pop-8": { // Prompt Engineer — target/crosshair
+      grad: ["#4a7a78", "#7aaba8"],
+      path: `<circle cx="24" cy="24" r="9" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <circle cx="24" cy="24" r="5" fill="none" stroke="#fff" stroke-width="1" opacity=".7"/>
+             <circle cx="24" cy="24" r="1.5" fill="#fff"/>
+             <line x1="24" y1="12" x2="24" y2="15" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+             <line x1="24" y1="33" x2="24" y2="36" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+             <line x1="12" y1="24" x2="15" y2="24" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+             <line x1="33" y1="24" x2="36" y2="24" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".5"/>`
+    },
+    "pop-9": { // Responsive Layout — grid frames
+      grad: ["#7a9a7a", "#a0b8a0"],
+      path: `<rect x="13" y="15" width="10" height="18" rx="1.5" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <rect x="26" y="15" width="10" height="12" rx="1.5" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <rect x="26" y="30" width="10" height="5" rx="1" fill="none" stroke="#fff" stroke-width="1" opacity=".6"/>
+             <line x1="13" y1="19" x2="23" y2="19" stroke="#fff" stroke-width=".8" opacity=".5"/>`
+    },
+    "pop-10": { // API Integrator — connected arrows
+      grad: ["#5d7f94", "#8aacbf"],
+      path: `<circle cx="16" cy="24" r="4" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <circle cx="32" cy="24" r="4" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <path d="M20 22 L28 22" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M26 20 L28 22 L26 24" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+             <path d="M28 26 L20 26" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+             <path d="M22 24 L20 26 L22 28" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>`
+    },
+    "pop-11": { // Code Refactorer — transformation diamond
+      grad: ["#c49a4a", "#b08430"],
+      path: `<path d="M24 14 L34 24 L24 34 L14 24 Z" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"/>
+             <path d="M20 24 L23 27 L28 21" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+             <circle cx="24" cy="14" r="1" fill="#fff" opacity=".6"/>
+             <circle cx="34" cy="24" r="1" fill="#fff" opacity=".6"/>`
+    },
+    "pop-12": { // SQL Query Builder — database cylinder
+      grad: ["#5d6f8a", "#8a9bb0"],
+      path: `<ellipse cx="24" cy="16" rx="8" ry="3" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <line x1="16" y1="16" x2="16" y2="32" stroke="#fff" stroke-width="1.2"/>
+             <line x1="32" y1="16" x2="32" y2="32" stroke="#fff" stroke-width="1.2"/>
+             <ellipse cx="24" cy="32" rx="8" ry="3" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <path d="M16 24 Q24 28 32 24" fill="none" stroke="#fff" stroke-width="1" opacity=".5"/>`
+    },
+    "pop-13": { // Content Summarizer — stacked pages compress
+      grad: ["#9a8a7a", "#b0a898"],
+      path: `<rect x="17" y="13" width="14" height="18" rx="1.5" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <path d="M20 35 H30 Q31 35 31 34 V18" stroke="#fff" stroke-width="1" opacity=".4"/>
+             <line x1="20" y1="18" x2="28" y2="18" stroke="#fff" stroke-width="1" opacity=".6" stroke-linecap="round"/>
+             <line x1="20" y1="22" x2="28" y2="22" stroke="#fff" stroke-width="1" opacity=".6" stroke-linecap="round"/>
+             <line x1="20" y1="26" x2="24" y2="26" stroke="#fff" stroke-width="1" opacity=".4" stroke-linecap="round"/>`
+    },
+    "pop-14": { // Sprint Planner — kanban columns
+      grad: ["#5e8260", "#8fb08f"],
+      path: `<rect x="13" y="16" width="6" height="16" rx="1" fill="none" stroke="#fff" stroke-width="1.1"/>
+             <rect x="21" y="16" width="6" height="10" rx="1" fill="none" stroke="#fff" stroke-width="1.1"/>
+             <rect x="29" y="16" width="6" height="20" rx="1" fill="none" stroke="#fff" stroke-width="1.1"/>
+             <line x1="13" y1="20" x2="19" y2="20" stroke="#fff" stroke-width=".8" opacity=".5"/>
+             <line x1="21" y1="20" x2="27" y2="20" stroke="#fff" stroke-width=".8" opacity=".5"/>
+             <line x1="29" y1="20" x2="35" y2="20" stroke="#fff" stroke-width=".8" opacity=".5"/>`
+    },
+    "pop-15": { // i18n Helper — globe
+      grad: ["#4a7a78", "#7aaba8"],
+      path: `<circle cx="24" cy="24" r="10" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <ellipse cx="24" cy="24" rx="5" ry="10" fill="none" stroke="#fff" stroke-width="1" opacity=".7"/>
+             <line x1="14" y1="24" x2="34" y2="24" stroke="#fff" stroke-width="1" opacity=".5"/>
+             <path d="M15 19 Q24 21 33 19" fill="none" stroke="#fff" stroke-width=".8" opacity=".4"/>
+             <path d="M15 29 Q24 27 33 29" fill="none" stroke="#fff" stroke-width=".8" opacity=".4"/>`
+    },
+    "pop-16": { // Persona Creator — person silhouette
+      grad: ["#b06040", "#c48060"],
+      path: `<circle cx="24" cy="18" r="5" fill="none" stroke="#fff" stroke-width="1.3"/>
+             <path d="M14 36 Q14 27 24 27 Q34 27 34 36" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>`
+    },
+    "pop-17": { // Performance Profiler — lightning bolt
+      grad: ["#c49a4a", "#d4a84a"],
+      path: `<path d="M26 12 L18 25 H24 L22 36 L32 22 H25 Z" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+             <circle cx="16" cy="16" r="1" fill="#fff" opacity=".4"/>
+             <circle cx="34" cy="30" r="1" fill="#fff" opacity=".4"/>`
+    },
+    "pop-18": { // Cursor Rules Generator — gear
+      grad: ["#5d6f8a", "#8a9bb0"],
+      path: `<circle cx="24" cy="24" r="5" fill="none" stroke="#fff" stroke-width="1.2"/>
+             <circle cx="24" cy="24" r="2" fill="#fff" opacity=".7"/>
+             <line x1="24" y1="13" x2="24" y2="17" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+             <line x1="24" y1="31" x2="24" y2="35" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+             <line x1="13" y1="24" x2="17" y2="24" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+             <line x1="31" y1="24" x2="35" y2="24" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+             <line x1="16.2" y1="16.2" x2="19" y2="19" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+             <line x1="29" y1="29" x2="31.8" y2="31.8" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+             <line x1="31.8" y1="16.2" x2="29" y2="19" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+             <line x1="19" y1="29" x2="16.2" y2="31.8" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>`
+    },
+  };
+
+  function skillIcon(id, size) {
+    const icon = ICON_MAP[id];
+    if (!icon) return "";
+    const [c1, c2] = icon.grad;
+    const uid = `g-${id}`;
+    return `<svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="${uid}" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+        <stop stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/>
+      </linearGradient></defs>
+      <circle cx="24" cy="24" r="24" fill="url(#${uid})"/>
+      ${icon.path}
+    </svg>`;
   }
 
   function heartSVG(filled) {
@@ -265,7 +465,7 @@
     card.dataset.id = skill.id;
 
     card.innerHTML = `
-      <div class="skill-icon ${iconColorForCategory(skill.category)}">${skill.emoji}</div>
+      <div class="skill-icon">${skillIcon(skill.id, 44)}</div>
       <div class="skill-body">
         <div class="skill-header">
           <span class="skill-name">${skill.name}</span>
@@ -387,7 +587,7 @@
         </button>
       </div>
       <div class="overlay-body">
-        <div class="detail-icon ${iconColorForCategory(skill.category)}">${skill.emoji}</div>
+        <div class="detail-icon">${skillIcon(skill.id, 64)}</div>
         <h2 class="detail-name">${skill.name}</h2>
         <p class="detail-category">${skill.category} · ${skill.source}</p>
         <p class="detail-desc">${skill.longDesc}</p>
