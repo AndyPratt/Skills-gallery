@@ -237,6 +237,101 @@
   }
 
   // ============================================================
+  //  PROFILE MATCHING ENGINE
+  // ============================================================
+
+  const STOP_WORDS = new Set([
+    "i", "im", "me", "my", "we", "our", "you", "your", "a", "an", "the",
+    "is", "am", "are", "was", "were", "be", "been", "being", "have", "has",
+    "had", "do", "does", "did", "will", "would", "could", "should", "can",
+    "may", "might", "shall", "to", "of", "in", "for", "on", "with", "at",
+    "by", "from", "as", "into", "through", "about", "between", "after",
+    "and", "but", "or", "not", "no", "so", "if", "then", "than", "that",
+    "this", "it", "its", "also", "very", "just", "like", "use", "using",
+    "work", "working", "want", "interested", "really", "lot", "things",
+    "who", "what", "when", "where", "how", "which", "more", "some", "any",
+    "all", "both", "each", "most", "other", "such", "too", "up", "out",
+  ]);
+
+  const COMPOUND_TERMS = [
+    "design system", "design systems", "design tokens", "full stack",
+    "full-stack", "front end", "front-end", "frontend", "back end",
+    "back-end", "backend", "machine learning", "data science",
+    "code review", "unit test", "unit tests", "api design",
+    "system design", "user research", "ux design", "ui design",
+    "project management", "sprint planning", "prompt engineering",
+    "technical writing", "data analysis", "sql query", "sql queries",
+    "css grid", "css flexbox", "responsive design", "web performance",
+    "open source", "cursor rules",
+  ];
+
+  function extractProfileKeywords(text) {
+    if (!text || !text.trim()) return [];
+
+    const lower = text.toLowerCase();
+    const keywords = [];
+
+    for (const term of COMPOUND_TERMS) {
+      if (lower.includes(term)) {
+        keywords.push(term);
+      }
+    }
+
+    const words = lower
+      .replace(/[^a-z0-9\-+#.]/g, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
+
+    for (const word of words) {
+      if (!keywords.includes(word)) {
+        keywords.push(word);
+      }
+    }
+
+    return keywords;
+  }
+
+  function buildSkillSearchText(skill) {
+    const parts = [
+      skill.name,
+      skill.desc,
+      skill.longDesc,
+      skill.category,
+      ...skill.features,
+    ];
+    return parts.join(" ").toLowerCase();
+  }
+
+  function scoreSkillAgainstProfile(skill, profileKeywords) {
+    if (profileKeywords.length === 0) return 0;
+
+    const searchText = buildSkillSearchText(skill);
+    let score = 0;
+
+    for (const keyword of profileKeywords) {
+      if (searchText.includes(keyword)) {
+        score += keyword.includes(" ") ? 3 : 1;
+      }
+    }
+
+    return score;
+  }
+
+  function getProfileMatchedSkills() {
+    const aboutMe = localStorage.getItem("skillAboutMe") || "";
+    const keywords = extractProfileKeywords(aboutMe);
+    if (keywords.length === 0) return [];
+
+    const MIN_SCORE = 2;
+
+    return skills
+      .filter((s) => s.section === "popular")
+      .map((s) => ({ skill: s, score: scoreSkillAgainstProfile(s, keywords) }))
+      .filter((entry) => entry.score >= MIN_SCORE)
+      .sort((a, b) => b.score - a.score);
+  }
+
+  // ============================================================
   //  RENDER HELPERS
   // ============================================================
 
@@ -458,11 +553,15 @@
       : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
   }
 
-  function renderCard(skill) {
+  function renderCard(skill, { isProfileMatch = false } = {}) {
     const isFav = favorites.has(skill.id);
     const card = document.createElement("div");
     card.className = "skill-card";
     card.dataset.id = skill.id;
+
+    const profileBadge = isProfileMatch
+      ? `<span class="skill-tag tag-profile-match">Matched to profile</span>`
+      : "";
 
     card.innerHTML = `
       <div class="skill-icon">${skillIcon(skill.id, 44)}</div>
@@ -477,6 +576,7 @@
         <div class="skill-tags">
           <span class="skill-tag tag-category">${skill.category}</span>
           <span class="skill-tag tag-source">${skill.source}</span>
+          ${profileBadge}
         </div>
       </div>
     `;
@@ -498,8 +598,23 @@
   function renderForYou() {
     const list = document.getElementById("forYouList");
     list.innerHTML = "";
+
+    const profileMatches = getProfileMatchedSkills();
+    const matchedIds = new Set(profileMatches.map((m) => m.skill.id));
+
+    const descEl = document.querySelector("#panelForYou .section-desc");
+    if (profileMatches.length > 0) {
+      descEl.textContent = "Based on your profile and full-stack workflow";
+    } else {
+      descEl.textContent = "Based on your design systems and full-stack workflow";
+    }
+
+    profileMatches.forEach((m) => {
+      list.appendChild(renderCard(m.skill, { isProfileMatch: true }));
+    });
+
     skills
-      .filter((s) => s.section === "forYou")
+      .filter((s) => s.section === "forYou" && !matchedIds.has(s.id))
       .forEach((s) => list.appendChild(renderCard(s)));
   }
 
@@ -785,6 +900,7 @@
     const value = aboutMeInput.value.trim();
     localStorage.setItem("skillAboutMe", value);
     showAboutMeStatus("Profile saved", "success");
+    renderForYou();
   });
 
   function showAboutMeStatus(msg, type) {
